@@ -1,0 +1,30 @@
+body{
+  margin: 0;
+}
+
+#mapid{
+    display: block;
+    border: 1px solid black;
+    width: 800px;
+    height: 500px;
+    margin: auto;
+}
+
+.map {
+    display: block;
+    border: 1px solid black;
+    width: 570px;
+    height: 500px;
+    float: left;
+}
+#demoMap{
+  display: block;
+  border: 1px solid black;
+  width: 500px;
+  height: 600px;
+  float: left;
+
+}
+.map, #demoMap{
+  display: none;
+}
