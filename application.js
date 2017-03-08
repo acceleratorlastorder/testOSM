@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function start() {
     console.log(" salut ! ");
-    leaflet();
+    openLayers2(),openLayers3(),leaflet();
 }
 
 function openLayers2() {
@@ -36,7 +36,7 @@ function leaflet() {
     let mymap = L.map('mapid').setView([51.505, -0.09], 13);
     L.tileLayer("https://api.mapbox.com/styles/v1/accelerator/cizzftwny00gy2spf4jd8t8gg/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWNjZWxlcmF0b3IiLCJhIjoiY2l6emRuNjExMDAxbDJxbzB1bWl6ZjFjdCJ9.00Aldip8FUzUISgvMLwanA", {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 4,
+        minZoom: 4,
         id: 'mapbox.satellite',
         accessToken: 'your.mapbox.public.access.token'
     }).addTo(mymap);
