@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function start() {
     console.log(" salut ! ");
-    openLayers2(),openLayers3(),leaflet();
+  //  openLayers2();
+  //  openLayers3();
+    leaflet();
+
 }
 
 function openLayers2() {
@@ -29,13 +32,15 @@ function openLayers3() {
     });
 }
 
+
 function leaflet() {
-  let southWest = L.latLng(40.712, -74.227),
-    northEast = L.latLng(40.774, -74.125),
-    bounds = L.latLngBounds(southWest, northEast);
-    let mymap = L.map('mapid').setView([51.505, -0.09], 13);
+    let southWest = L.latLng(40.712, -74.227),
+        northEast = L.latLng(40.774, -74.125),
+        bounds = L.latLngBounds(southWest, northEast);
+    let mymap = L.map('mapid').setView([37.996, 15.908], 5);
     L.tileLayer("https://api.mapbox.com/styles/v1/accelerator/cizzftwny00gy2spf4jd8t8gg/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWNjZWxlcmF0b3IiLCJhIjoiY2l6emRuNjExMDAxbDJxbzB1bWl6ZjFjdCJ9.00Aldip8FUzUISgvMLwanA", {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
         minZoom: 4,
         id: 'mapbox.satellite',
         accessToken: 'your.mapbox.public.access.token'
@@ -46,6 +51,6 @@ function leaflet() {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
-        radius: 10
+        radius: 50000
     }).addTo(mymap);
 }

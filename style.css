@@ -9,21 +9,25 @@ main {
     width: 100%;
     flex-wrap: wrap;
 }
-h1, h2, h3, h4, h5, h6{
-  margin: 0;
-  padding: 0;
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
 }
+
 .remplissage {
-  display: flex;
+    display: flex;
     width: 30%;
     height: 270px;
     flex-grow: 1;
     border: 1px solid black;
     flex-direction: column;
 }
-#mapid{
-  width: 100%;
+
+#mapid {
+    width: 100%;
 }
-.osm{
-  flex: 1;
+
+.osm {
+    flex: 1;
 }
