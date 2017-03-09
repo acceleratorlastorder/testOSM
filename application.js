@@ -71,11 +71,11 @@ function openLayers3() {
 
 
 function leaflet() {
+    var mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
     let southWest = L.latLng(40.712, -74.227),
         northEast = L.latLng(40.774, -74.125),
         bounds = L.latLngBounds(southWest, northEast);
-    let mymap = L.map('mapid').setView([37.996, 15.908], 5);
     L.tileLayer("https://api.mapbox.com/styles/v1/accelerator/cizzftwny00gy2spf4jd8t8gg/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWNjZWxlcmF0b3IiLCJhIjoiY2l6emRuNjExMDAxbDJxbzB1bWl6ZjFjdCJ9.00Aldip8FUzUISgvMLwanA", {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
@@ -83,7 +83,35 @@ function leaflet() {
         id: 'mapbox.satellite',
         accessToken: 'your.mapbox.public.access.token'
     }).addTo(mymap);
-    getjson();
+
+    createcircle();
+
+
+
+    function createcircle() {
+        let lat, long, nbmessage;
+        let jsonlength = 2
+        let circles = [];
+        lat = [37.996, 15.908];
+        long = [40.774, -74.125];
+        nbmessage = [666, 50];
+        console.log("create circle started");
+        for (let i = 0; i < 2; i++) {
+            console.log(i);
+            circles.push({
+                i: L.circle([lat[i], long[i]], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: nbmessage[i] * 50
+                }).addTo(mymap)
+            })
+            console.log("latitude: ", lat[i], "longitude: ", long[i], "nbmessage: ", nbmessage[i]);
+        }
+console.log("circles: ", circles);
+    }
+
+
 }
 
 function getjson() {
@@ -108,18 +136,6 @@ function getjson() {
     };
 
     request.send();
+
     createcircle();
-}
-
-function createcircle() {
-
-    for (let i = 0; i < array.length; i++) {
-        var circle + i = L.circle([43.296346, 5.369889], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: nbmessage * 100
-        }).addTo(mymap);
-    }
-
 }
