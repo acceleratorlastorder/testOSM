@@ -15,13 +15,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 
-
-
-
-
-
-
-
 function lol() {
     console.log("jkgjskqjgk");
     console.log("this = ", this);
@@ -35,17 +28,17 @@ function lol() {
 }
 
 function redraw() {
-    //openLayers2();
-    //openLayers3();
+    //    openLayers2();
+    //  openLayers3();
     leaflet();
 }
 
 function start() {
+
     console.log(" salut ! ");
     //openLayers2();
-    //openLayers3();
+    //    openLayers3();
     leaflet();
-
 }
 
 function openLayers2() {
@@ -69,9 +62,8 @@ function openLayers3() {
     });
 }
 
-
 function leaflet() {
-    var mymap = L.map('mapid').setView([37.996, 15.908], 5);
+    let mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
     let southWest = L.latLng(40.712, -74.227),
         northEast = L.latLng(40.774, -74.125),
@@ -84,12 +76,28 @@ function leaflet() {
         accessToken: 'your.mapbox.public.access.token'
     }).addTo(mymap);
 
-    createcircle();
+    getjson(createCircle, mymap);
+}
 
 
+let createCircle = function(mymap) {
+    if (mymap == undefined) {
+        console.log("not defined");
+    } else {
 
-    function createcircle() {
-        let lat, long, nbmessage;
+        if (trolol) {
+            for (var i = 0; i < trolol.histoire.length; i++) {
+                console.log(trolol.histoire[i]);
+            }
+
+        } else {
+            return false;
+        }
+
+
+        console.log("my map: ", mymap);
+        console.log("après get json");
+        console.log("data dans create", data);
         let jsonlength = 2
         let circles = [];
         lat = [37.996, 15.908];
@@ -108,34 +116,66 @@ function leaflet() {
             })
             console.log("latitude: ", lat[i], "longitude: ", long[i], "nbmessage: ", nbmessage[i]);
         }
-console.log("circles: ", circles);
-    }
+        console.log("circles: ", circles);
 
+    }
 
 }
 
-function getjson() {
-
+function getjson(callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', 'back/villesetmessages.json', true);
+    console.log("hey");
+    request.ontimeout = function() {
+        console.error("The request for timed out.");
+    };
+    request.addEventListener("progress", updateProgress, false);
+    request.addEventListener("load", transferComplete, false);
+    request.addEventListener("error", transferFailed, false);
+    request.addEventListener("abort", transferCanceled, false);
+
+    console.log("request", request);
+
+    // progression des transferts depuis le serveur jusqu'au client (téléchargement)
+    function updateProgress(oEvent) {
+        if (oEvent.lengthComputable) {
+            var percentComplete = oEvent.loaded / oEvent.total;
+            console.log("oEvent: ", oEvent, "; oEvent.total", oEvent.total, "oEvent.loaded: ", oEvent.loaded);
+
+        } else {
+            console.log("can't read the length");
+        }
+    }
+
+    function transferComplete(evt) {
+        console.log("Le transfert est terminé.");
+    }
+
+    function transferFailed(evt) {
+        console.error("Une erreur est survenue pendant le transfert du fichier.");
+    }
+
+    function transferCanceled(evt) {
+        console.log("Le transfert a été annulé par l'utilisateur.");
+    }
 
     request.onload = function() {
-        if (this.status >= 200 && this.status < 400) {
-            // Success!
-            var data = JSON.parse(this.response);
-            console.log("reponse: ", this);
-            console.log("data: ", data);
-        } else {
-            // We reached our target server, but it returned an error
-            console.log("error");
+        if (request.readyState === 4) {
+            console.log("4 passé");
+            if (request.status === 200) {
+                console.log("200 passé");
+                console.log("this: ", this);
+                console.log("response: ", this.response);
+                let trolol = JSON.parse(this.response);
+                console.log("trolol", trolol);
+                console.log("nbmessage: ", trolol.histoire[0].nombredemessage);
+
+
+                callback.apply(request);
+            } else {
+                console.error(request.statusText);
+            }
         }
     };
-
-    request.onerror = function() {
-        // There was a connection error of some sort
-    };
-
-    request.send();
-
-    createcircle();
+    request.open('GET', 'back/villesetmessages.json', true);
+    request.send(null);
 }
