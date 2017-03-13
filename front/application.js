@@ -182,6 +182,6 @@ function getjson(callback) {
             }
         }
     };
-    request.open('GET', 'back/villesetmessages.json', true);
+    request.open('GET', '/../back/villesetmessages.json', true);
     request.send(null);
 }
