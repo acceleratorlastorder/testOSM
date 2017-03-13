@@ -104,20 +104,21 @@ let createCircle = function(data) {
     console.log("data dans create", data);
     let jsonlength = 2
     let circles = [];
-    lat,long,nbmessage;
+   let lat,long,nbmessage;
     console.log("create circle started");
-    for (let i = 0; i < 2; i++) {
-
+    for (let i = 0; i < data.histoire.length; i++) {
+      //define the lat long and nbmessage from the json (data)
+lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage;
         console.log(i);
         circles.push({
-            i: L.circle([lat[i], long[i]], {
+            i: L.circle([lat, long], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
-                radius: nbmessage[i] * 50
+                radius: nbmessage * 50
             }).addTo(mymap)
         })
-        console.log("latitude: ", lat[i], "longitude: ", long[i], "nbmessage: ", nbmessage[i]);
+        console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
     }
     console.log("circles: ", circles);
 
