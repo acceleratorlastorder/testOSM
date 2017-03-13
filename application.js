@@ -61,13 +61,16 @@ function openLayers3() {
         })
     });
 }
+var mymap;
 
-function leaflet() {
-    let mymap = L.map('mapid').setView([37.996, 15.908], 5);
+let leaflet = function() {
+    mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
+    //  define long/lat of the boundary
     let southWest = L.latLng(40.712, -74.227),
         northEast = L.latLng(40.774, -74.125),
         bounds = L.latLngBounds(southWest, northEast);
+    //select the map template the max zoom and the min zoom, and finally create it
     L.tileLayer("https://api.mapbox.com/styles/v1/accelerator/cizzftwny00gy2spf4jd8t8gg/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWNjZWxlcmF0b3IiLCJhIjoiY2l6emRuNjExMDAxbDJxbzB1bWl6ZjFjdCJ9.00Aldip8FUzUISgvMLwanA", {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
@@ -76,49 +79,49 @@ function leaflet() {
         accessToken: 'your.mapbox.public.access.token'
     }).addTo(mymap);
 
-    getjson(createCircle, mymap);
+    getjson(createCircle);
 }
 
 
-let createCircle = function(mymap) {
-    if (mymap == undefined) {
-        console.log("not defined");
+
+
+
+let createCircle = function(data) {
+    console.log("heeey", data, mymap);
+    if (data) {
+      console.log(data);
+        for (let i = 0; i < data.histoire.length; i++) {
+            console.log(data.histoire[i]);
+        }
+        console.log("inside circle");
     } else {
-
-        if (trolol) {
-            for (var i = 0; i < trolol.histoire.length; i++) {
-                console.log(trolol.histoire[i]);
-            }
-
-        } else {
-            return false;
-        }
-
-
-        console.log("my map: ", mymap);
-        console.log("après get json");
-        console.log("data dans create", data);
-        let jsonlength = 2
-        let circles = [];
-        lat = [37.996, 15.908];
-        long = [40.774, -74.125];
-        nbmessage = [666, 50];
-        console.log("create circle started");
-        for (let i = 0; i < 2; i++) {
-            console.log(i);
-            circles.push({
-                i: L.circle([lat[i], long[i]], {
-                    color: 'red',
-                    fillColor: '#f03',
-                    fillOpacity: 0.5,
-                    radius: nbmessage[i] * 50
-                }).addTo(mymap)
-            })
-            console.log("latitude: ", lat[i], "longitude: ", long[i], "nbmessage: ", nbmessage[i]);
-        }
-        console.log("circles: ", circles);
-
+        console.log("rien de défini");
+        return false;
     }
+
+    console.log("my map: ", mymap);
+    console.log("après get json");
+    console.log("data dans create", data);
+    let jsonlength = 2
+    let circles = [];
+    lat,long,nbmessage;
+    console.log("create circle started");
+    for (let i = 0; i < 2; i++) {
+
+        console.log(i);
+        circles.push({
+            i: L.circle([lat[i], long[i]], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: nbmessage[i] * 50
+            }).addTo(mymap)
+        })
+        console.log("latitude: ", lat[i], "longitude: ", long[i], "nbmessage: ", nbmessage[i]);
+    }
+    console.log("circles: ", circles);
+
+
 
 }
 
@@ -165,12 +168,14 @@ function getjson(callback) {
                 console.log("200 passé");
                 console.log("this: ", this);
                 console.log("response: ", this.response);
-                let trolol = JSON.parse(this.response);
-                console.log("trolol", trolol);
-                console.log("nbmessage: ", trolol.histoire[0].nombredemessage);
-
-
-                callback.apply(request);
+                let data = JSON.parse(this.response);
+                console.log("data", data);
+                console.log("map dans onload: ", mymap);
+                console.log("nbmessage: ", data.histoire[0].nombredemessage);
+                console.log("createCircle before: ", createCircle);
+                console.log("callback: ", callback);
+                callback(data);
+                console.log("createCircle after: ", createCircle);
             } else {
                 console.error(request.statusText);
             }
