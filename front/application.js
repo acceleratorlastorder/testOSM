@@ -36,8 +36,8 @@ function redraw() {
 function start() {
 
     console.log(" salut ! ");
-    //openLayers2();
-    //    openLayers3();
+    openLayers2();
+    openLayers3();
     leaflet();
 }
 
@@ -111,7 +111,7 @@ let createCircle = function(data) {
         console.log(i);
         circles.push({
             i: L.circle([lat, long], {
-              //random color generation by using math random
+                //random color generation by using math random
                 color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', 1.0)',
