@@ -28,7 +28,7 @@ function lol() {
 }
 
 function redraw() {
-    //    openLayers2();
+    //  openLayers2();
     //  openLayers3();
     leaflet();
 }
