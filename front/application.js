@@ -89,7 +89,7 @@ let leaflet = function() {
 let createCircle = function(data) {
     console.log("heeey", data, mymap);
     if (data) {
-      console.log(data);
+        console.log(data);
         for (let i = 0; i < data.histoire.length; i++) {
             console.log(data.histoire[i]);
         }
@@ -102,18 +102,22 @@ let createCircle = function(data) {
     console.log("my map: ", mymap);
     console.log("après get json");
     console.log("data dans create", data);
-    let jsonlength = 2
     let circles = [];
-   let lat,long,nbmessage;
+    let lat, long, nbmessage;
     console.log("create circle started");
     for (let i = 0; i < data.histoire.length; i++) {
-      //define the lat long and nbmessage from the json (data)
-lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage;
+        //define the lat long and nbmessage from the json (data)
+        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage;
         console.log(i);
         circles.push({
             i: L.circle([lat, long], {
-                color: 'red',
-                fillColor: '#f03',
+              //random color generation by using math random
+                color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', 1.0)',
+                fillColor: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', 1.0)',
                 fillOpacity: 0.5,
                 radius: nbmessage * 50
             }).addTo(mymap)
@@ -149,6 +153,7 @@ function getjson(callback) {
             console.log("can't read the length");
         }
     }
+    request.withCredentials = true;
 
     function transferComplete(evt) {
         console.log("Le transfert est terminé.");
@@ -175,13 +180,13 @@ function getjson(callback) {
                 console.log("nbmessage: ", data.histoire[0].nombredemessage);
                 console.log("createCircle before: ", createCircle);
                 console.log("callback: ", callback);
-                callback(data);
+                return callback(data);
                 console.log("createCircle after: ", createCircle);
             } else {
                 console.error(request.statusText);
             }
         }
     };
-    request.open('GET', '/../back/villesetmessages.json', true);
-    request.send(null);
+    request.open('GET', './villesetmessages.json', true);
+    request.send();
 }

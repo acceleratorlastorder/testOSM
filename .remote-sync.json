@@ -1,0 +1,16 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": true,
+  "deleteLocal": false,
+  "hostname": "192.168.56.101",
+  "port": "22",
+  "target": "/var/www/openstreetmap",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "simplon",
+  "password": "simplon",
+  "watch": [],
+  "transport": "scp"
+}
