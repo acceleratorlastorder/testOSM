@@ -153,7 +153,6 @@ function getjson(callback) {
             console.log("can't read the length");
         }
     }
-    request.withCredentials = true;
 
     function transferComplete(evt) {
         console.log("Le transfert est terminé.");
@@ -181,12 +180,11 @@ function getjson(callback) {
                 console.log("createCircle before: ", createCircle);
                 console.log("callback: ", callback);
                 return callback(data);
-                console.log("createCircle after: ", createCircle);
             } else {
                 console.error(request.statusText);
             }
         }
     };
-    request.open('GET', './villesetmessages.json', true);
+    request.open('GET', 'http://openstreetmap.local/json/villesetmessages.json', true);
     request.send();
 }
