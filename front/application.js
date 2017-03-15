@@ -32,7 +32,6 @@ function redraw() {
     //  openLayers3();
     leaflet();
 }
-
 function start() {
 
     console.log(" salut ! ");
@@ -82,10 +81,6 @@ let leaflet = function() {
     getjson(createCircle);
 }
 
-
-
-
-
 let createCircle = function(data) {
     console.log("heeey", data, mymap);
     if (data) {
@@ -111,22 +106,20 @@ let createCircle = function(data) {
         console.log(i);
         circles.push({
             i: L.circle([lat, long], {
-                //random color generation by using math random
+               //random color generation by using math random
                 color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', 1.0)',
                 fillColor: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', 1.0)',
-                fillOpacity: 0.5,
-                radius: nbmessage * 50
+                fillOpacity: 0.8,
+                radius: nbmessage *10
             }).addTo(mymap)
         })
         console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
     }
     console.log("circles: ", circles);
-
-
 
 }
 

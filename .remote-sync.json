@@ -9,8 +9,8 @@
     ".remote-sync.json",
     ".git/**"
   ],
-  "username": "simplon",
   "password": "simplon",
   "watch": [],
-  "transport": "scp"
+  "transport": "scp",
+  "username": "simplon"
 }
