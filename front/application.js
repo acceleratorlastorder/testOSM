@@ -178,6 +178,6 @@ function getjson(callback) {
             }
         }
     };
-    request.open('GET', 'villesetmessages.json', true);
+    request.open('GET', 'http://openstreetmap.local/back/villesetmessages.json', true);
     request.send();
 }
