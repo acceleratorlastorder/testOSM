@@ -1,6 +1,5 @@
 <?php
 
-//Developpé par stephane.
 //réveil dans 5h bordel, j'ai eu un flash dans la nuit j'ai juste simplifié le code.
 
 $user = "root";
