@@ -18,7 +18,24 @@ echo "longitude: " . htmlspecialchars($longitude) . "</br>";
 echo "latitude: " . htmlspecialchars($latitude) . "</br>";
 echo "histoire: " . htmlspecialchars($histoire) . "</br>";
 echo "token après séssion: " . htmlspecialchars($_POST['token']) . "</br>";
-z
+
+
+$tableau_pour_json = ['prenom'=>'Alexandre', 'nom'=>'Chevalier'];
+echo "tableau pour le json de test :" . $tableau_pour_json;
+$contenu_json =json_encode($tableau_pour_json);
+echo "encodage prêt :" . $contenu_json;
+// Nom du fichier à créer
+$nom_du_fichier = 'fichier.json';
+echo "variable du fichier: " . $nom_du_fichier ;
+// Ouverture du fichier
+$fichier = fopen($nom_du_fichier, 'w+');
+echo "ouverture du fichier";
+// Ecriture dans le fichier
+fwrite($fichier, $contenu_json);
+echo "écriture done";
+// Fermeture du fichier
+fclose($fichier);
+echo "fermeture du ficher";
 //On vérifie que tous les jetons sont là
 if (isset($_SESSION['token']) AND isset($_POST['token']) AND !empty($_SESSION['token']) AND !empty($_POST['token'])) {
 	// On vérifie que les deux correspondent
