@@ -2,44 +2,46 @@
 
 //Developpé par stephane.
 
-try {
-    $bdd = new PDO('mysql:host=localhost;dbname=streetmap;charset=utf8', 'root', '');
-} catch (Exception $ex) {
-    die('Erreur : ' . $e->getMessage());
-}
+$user = "root";
+$pass = "";
 
-$f = fopen('test.txt',"W+");
+//$bdd = new PDO('mysql:host=localhost;dbname=streetmap', $user, $pass);
+//$reponse = $bdd->query('SELECT * from streetmap');
 
-$reponse = $bdd->query('SELECT * FROM streetmap');
+$dbh = new PDO('mysql:host=localhost;dbname=streetmap', $user, $pass);
+$req = $dbh->query('SELECT * from streetmap');
 
-fwrite($f, '{ /n "histoire":[ /n');
-$nmb = mysql_num_rows($reponse);
+
+$f = fopen("villesetmessages.json","w+");
+
+fwrite($f, "{ \r\n \"histoire\": [ \r\n");
+$nmb = $req->rowCount();
+
 $i = 0;
 
-while($donnees = mysql_fetch_array($reponse)) 
-{
+while($donnees = $req->fetch()) {
     if($i < $nmb )
     {
-        fwrite($f, '{/n
-            "ID": "'.$donnees['id'].'",/n
-            "pays": "'.$donnees['pays'].'",/n
-            "ville": "'.$donnees['ville'].'",/n
-            "coordonees": '.$donnees['coordonees'].',/n
-            "nombredemessage": '.$donnees['nbmsg'].'/n
-        },');
+        fwrite($f, "{\n
+            \"ID\": \"".$donnees['ID']."\",\n
+            \"pays\": \"".$donnees['pays']."\",\n
+            \"ville\": \"".$donnees['ville']."\",\n
+            \"coordonees\": ".$donnees['coordonees'].",\n
+            \"nombredemessage\": ".$donnees['nbmsg']."\n
+        },");
     } elseif($i = $nmb)
     {
-        fwrite($f, '{/n
-            "ID": "'.$donnees['id'].'",/n
-            "pays": "'.$donnees['pays'].'",/n
-            "ville": "'.$donnees['ville'].'",/n
-            "coordonees": '.$donnees['coordonees'].',/n
-            "nombredemessage": '.$donnees['nbmsg'].'/n
-        }');
+        fwrite($f, "{\n
+            \"ID\": \"".$donnees['ID']."\",\n
+            \"pays\": \"".$donnees['pays']."\",\n
+            \"ville\": \"".$donnees['ville']."\",\n
+            \"coordonees\": ".$donnees['coordonees'].",\n
+            \"nombredemessage\": ".$donnees['nbmsg']."\n
+        }");
     }
 }
 
-fwrite($f, '    ]/n }/n');
+fwrite($f, "    ]\n }\n");
 fclose($f);
 
 ?>
