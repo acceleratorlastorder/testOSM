@@ -2,16 +2,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log("DOM loaded launching functions");
     start();
 
-    document.getElementsByTagName('h4')[0].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[1].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[2].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[3].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[4].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[5].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[6].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[7].addEventListener("click", lol, false);
-    document.getElementsByTagName('h4')[8].addEventListener("click", lol, false);
-
+    for (var i = 0; i < 8; i++) {
+        document.getElementsByTagName('h4')[i].addEventListener("click", lol, false);
+    }
 });
 
 
@@ -32,6 +25,7 @@ function redraw() {
     //  openLayers3();
     leaflet();
 }
+
 function start() {
 
     console.log(" salut ! ");
@@ -106,7 +100,7 @@ let createCircle = function(data) {
         console.log(i);
         circles.push({
             i: L.circle([lat, long], {
-               //random color generation by using math random
+                //random color generation by using math random
                 color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', 1.0)',
@@ -178,6 +172,6 @@ function getjson(callback) {
             }
         }
     };
-    request.open('GET', 'http://openstreetmap.local/back/villesetmessages.json', true);
+    request.open('GET', 'villesetmessages.json', true);
     request.send();
 }

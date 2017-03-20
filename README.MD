@@ -1,1 +1,1 @@
-Website : https://acceleratorlastorder.github.io/testOSM/front/index.html
+Website : https://acceleratorlastorder.github.io/testOSM/
