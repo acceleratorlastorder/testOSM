@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
@@ -7,38 +8,59 @@ $ville = $_POST['ville'];
 $longitude = $_POST['longitude'];
 $latitude = $_POST['latitude'];
 $histoire = $_POST['histoire'];
-session_start();
 
 
-//On enregistre notre token
+echo "nom: " . htmlspecialchars($nom) . "</br>";
+echo "prénom: " . htmlspecialchars($prenom) . "</br>";
+echo "age: " . htmlspecialchars($age) . "</br>";
+echo "ville: " . htmlspecialchars($ville) . "</br>";
+echo "longitude: " . htmlspecialchars($longitude) . "</br>";
+echo "latitude: " . htmlspecialchars($latitude) . "</br>";
+echo "histoire: " . htmlspecialchars($histoire) . "</br>";
+echo "token après séssion: " . htmlspecialchars($_POST['token']) . "</br>";
+z
+//On vérifie que tous les jetons sont là
+if (isset($_SESSION['token']) AND isset($_POST['token']) AND !empty($_SESSION['token']) AND !empty($_POST['token'])) {
+	// On vérifie que les deux correspondent
+	if ($_SESSION['token'] == $_POST['token']) {
+		// Vérification terminée
+		// On peut supprimer l'utilisateur
+		echo "réussite" . "</br>";
+		// On vérifie que la requête vient bien du formulaire
+		if ($_SERVER['HTTP_REFERER'] == 'http://openstreetmap.local/back/index.php') {
+			// On a vérifié la provenance de la requête
+			// On peut supprimer
 
-$token = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+			include_once('DBconnect.php');
+			try {
+				$dbh = new PDO('mysql:host=localhost;dbname=blogdb;charset=utf8', $dbuname, $dbpass);
+				$stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE login= ? AND password= ?");
+
+				$stmt->execute(array($login, $password));
+
+echo "connection done";
 
 
-$_SESSION['token'] = $token;
+			} catch (PDOException $e) {
+				print "Erreur !: " . $e->getMessage() . "<br/>";
+				die();
+			}
 
-echo "heyyyy </br>";
+		}
 
-echo "nom: " . $nom . "</br>";
-echo "prénom: " . $prenom . "</br>";
-echo "age: " . $age . "</br>";
-echo "ville: " . $ville . "</br>";
-echo "longitude: " . $longitude . "</br>";
-echo "latitude: " . $latitude . "</br>";
-echo "histoire: " . $histoire . "</br>";
+		// La requête vient d'autre part, on bloque
+		else {
+			echo "La requête ne provient pas du formulaire";
+		}
 
-
-include_once('DBconnect.php');
-try {
-    $dbh = new PDO('mysql:host=localhost;dbname=blogdb;charset=utf8', $dbuname, $dbpass);
-    $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE login= ? AND password= ?");
-
-    $stmt->execute(array($login, $password));
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
+		echo "arf pas bon hé bah alors on essaye de faire de vilaine choses ? :)";
+	}
 }
-
+else {
+	// Les token ne correspondent pas
+	// On ne supprime pas
+	echo "Erreur de vérification" . "</br>";
+}
 
 ?>
 <!DOCTYPE html>

@@ -1,15 +1,23 @@
 <?php
 
-    header("Access-Control-Allow-Headers: ./*");
-    header('Access-Control-Allow-Origin: http://127.0.0.1:8080');
-    header("Access-Control-Allow-Credentials: true");
-    header('Access-Control-Allow-Methods: GET, POST');
-    header('Access-Control-Max-Age: 1000');
-    header('Access-Control-Allow-Headers: Origin, , x-requested-with, x-requested-by, Content-Type, X-Auth-Token , Authorization');
+header("Access-Control-Allow-Headers: ./*");
+header('Access-Control-Allow-Origin: http://127.0.0.1:8080');
+header("Access-Control-Allow-Credentials: true");
+header('Access-Control-Allow-Methods: GET, POST');
+header('Access-Control-Max-Age: 1000');
+header('Access-Control-Allow-Headers: Origin, , x-requested-with, x-requested-by, Content-Type, X-Auth-Token , Authorization');
 
-    echo "Connected successfully<br />\n";
+echo "Connected successfully<br />\n";
 
- ?>
+
+session_start();
+
+$token = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+
+$_SESSION['token'] = $token;
+
+
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,6 +26,7 @@
     <title>lol</title>
   </head>
   <body>
+    <h2><?php echo "token = " . $token; ?></h2>
 <h1>ajout d'histoire</h1>
 <form class="formulaire" action="nouvelleentree.php" method="post">
   <p>Nom:</p>

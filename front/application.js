@@ -114,7 +114,7 @@ let createCircle = function(data) {
                     (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', 1.0)',
                 fillOpacity: 0.8,
-                radius: nbmessage *10
+                radius: nbmessage * 50
             }).addTo(mymap)
         })
         console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
@@ -178,6 +178,6 @@ function getjson(callback) {
             }
         }
     };
-    request.open('GET', 'http://openstreetmap.local/json/villesetmessages.json', true);
+    request.open('GET', 'villesetmessages.json', true);
     request.send();
 }
