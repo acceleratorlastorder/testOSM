@@ -14,7 +14,6 @@ $f = fopen("villesetmessages.json","w+");
 
 fwrite($f, "{ \r\n \"histoire\": [ \r\n");
 $nmb = $req->rowCount();
-echo $nmb;
 
 $i = 0;
 
