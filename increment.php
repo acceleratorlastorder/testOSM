@@ -1,13 +1,13 @@
 <?php
 
+//Developpé par stephane.
 //réveil dans 5h bordel, j'ai eu un flash dans la nuit j'ai juste simplifié le code.
 
-$user = "root";
-$pass = "";
+include_once 'back/DBconnect.php';
+echo "salut";
 
 $dbh = new PDO('mysql:host=localhost;dbname=streetmap', $user, $pass);
 $req = $dbh->query('SELECT * from streetmap');
-
 
 $f = fopen("villesetmessages.json","w+");
 
