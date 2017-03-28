@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 // useless function that make the clicked element bigger :)
 function lol() {
-    console.log("jkgjskqjgk");
+    console.log("yo");
     console.log("this = ", this);
 
     let parent = this.parentNode;
@@ -58,7 +58,7 @@ function openLayers3() {
 var mymap;
 // the leaflet function that define the mapitself (woah)
 let leaflet = function() {
-  //define were we start to see the map on the load
+    //define were we start to see the map on the load
     mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
     //  define long/lat of the boundary
@@ -68,14 +68,14 @@ let leaflet = function() {
     //select the map template the max zoom and the min zoom, and finally create it
     L.tileLayer("https://api.mapbox.com/styles/v1/accelerator/cizzftwny00gy2spf4jd8t8gg/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWNjZWxlcmF0b3IiLCJhIjoiY2l6emRuNjExMDAxbDJxbzB1bWl6ZjFjdCJ9.00Aldip8FUzUISgvMLwanA", {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-//max zoom possible
+        //max zoom possible
         maxZoom: 18,
-//min zoom possible
+        //min zoom possible
         minZoom: 0,
         id: 'mapbox.satellite',
         accessToken: 'your.mapbox.public.access.token'
     }).addTo(mymap);
-// let's start the most funny function :) enjoy!
+    // let's start the most funny function :) enjoy!
     getjson(createCircle);
 }
 
@@ -103,7 +103,8 @@ let createCircle = function(data) {
         lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage;
         console.log(i);
         circles.push({
-          //give to the circle the coordinates
+            //give to the circle the coordinates
+            i: bindPopup("I am a circle."),
             i: L.circle([lat, long], {
                 //random color generation by using math random
                 color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
@@ -112,7 +113,7 @@ let createCircle = function(data) {
                 fillColor: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', 1.0)',
-                    //set the opacity of the circle
+                //set the opacity of the circle
                 fillOpacity: 0.8,
                 //set the radius
                 radius: nbmessage * 50
@@ -125,7 +126,7 @@ let createCircle = function(data) {
 }
 //get the JSON response from the server
 function getjson(callback) {
-  //create a new variable that will contain all the request 
+    //create a new variable that will contain all the request
     var request = new XMLHttpRequest();
     console.log("hey");
     request.ontimeout = function() {
@@ -140,7 +141,7 @@ function getjson(callback) {
     request.addEventListener("error", transferFailed, false);
     //if the transfer is canceled this may inform us
     request.addEventListener("abort", transferCanceled, false);
-// console log as i like to do (this one show the request and how it looks like)
+    // console log as i like to do (this one show the request and how it looks like)
     console.log("request", request);
 
     // progression des transferts depuis le serveur jusqu'au client (téléchargement)
@@ -165,7 +166,7 @@ function getjson(callback) {
     function transferCanceled(evt) {
         console.log("Le transfert a été annulé par l'utilisateur.");
     }
-//once all is loaded we can charger this function that will callback the function we gave to it as an args remember ? getjson(callback) for now the callback is the function createCircle
+    //once all is loaded we can charger this function that will callback the function we gave to it as an args remember ? getjson(callback) for now the callback is the function createCircle
     request.onload = function() {
         if (request.readyState === 4) {
             console.log("4 passé");
