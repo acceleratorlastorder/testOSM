@@ -116,18 +116,23 @@ let createCircle = function(data) {
     console.log("circles: ", circles);
 
 }
-
+//get the JSON response from the server
 function getjson(callback) {
     var request = new XMLHttpRequest();
     console.log("hey");
     request.ontimeout = function() {
         console.error("The request for timed out.");
     };
-    request.addEventListener("progress", updateProgress, false);
-    request.addEventListener("load", transferComplete, false);
-    request.addEventListener("error", transferFailed, false);
-    request.addEventListener("abort", transferCanceled, false);
 
+    //make an event listener on the progression of the transfer (JSON in that case)
+    request.addEventListener("progress", updateProgress, false);
+    //once the status load is defined we can assume that the transfer is done
+    request.addEventListener("load", transferComplete, false);
+    //same for all previous but if the transfer failed
+    request.addEventListener("error", transferFailed, false);
+    //if the transfer is canceled this may inform us
+    request.addEventListener("abort", transferCanceled, false);
+// console log as i like to do (this one show the request and how it looks like)
     console.log("request", request);
 
     // progression des transferts depuis le serveur jusqu'au client (téléchargement)
@@ -152,7 +157,7 @@ function getjson(callback) {
     function transferCanceled(evt) {
         console.log("Le transfert a été annulé par l'utilisateur.");
     }
-
+//once all is loaded we can charger this function that will callback the function we gave to it as an args remember ? getjson(callback) for now the callback is the function createCircle 
     request.onload = function() {
         if (request.readyState === 4) {
             console.log("4 passé");
