@@ -1,11 +1,73 @@
 document.addEventListener("DOMContentLoaded", function(event) {
     console.log("DOM loaded launching functions");
     start();
-
+let createCircle;
     for (var i = 0; i < 8; i++) {
         document.getElementsByTagName('h4')[i].addEventListener("click", lol, false);
     }
 });
+
+function linkcircles(circles) {
+console.log("hey");
+
+cercle.on('click', onMapClick);
+}
+
+
+createCircle = function(data, circles) {
+    console.log("heeey", data, mymap);
+    if (data) {
+        console.log(data);
+        for (let i = 0; i < data.histoire.length; i++) {
+            console.log(data.histoire[i]);
+        }
+        console.log("inside circle");
+    } else {
+        console.log("rien de défini");
+        return false;
+    }
+
+    console.log("my map: ", mymap);
+    console.log("après get json");
+    console.log("data dans create", data);
+
+    let lat, long, nbmessage, country, city;
+    console.log("create circle started");
+    for (let i = 0; i < data.histoire.length; i++) {
+        //define the lat long and nbmessage from the json (data)
+        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage, country = data.histoire[i].pays, city = data.histoire[i].ville;
+        console.log(i);
+        circles.push({
+            //give to the circle the coordinates
+            circle: L.circle([lat, long], {
+                //random color generation by using math random
+                color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', 1.0)',
+                fillColor: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', ' +
+                    (Math.random() * 255).toFixed(0) + ', 1.0)',
+                //set the opacity of the circle
+                fillOpacity: 0.8,
+                //set the radius
+                radius: nbmessage * 50
+            }).addTo(mymap)
+        })
+        console.log("circles: ", circles);
+        console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
+    }
+    let lul = circles[0];
+    console.log("circles: ", circles);
+    console.log("circles: ", circles[0]);
+
+    return linkcircles(circles);
+}
+
+
+
+
+
+
 
 // useless function that make the clicked element bigger :)
 function lol() {
@@ -57,7 +119,7 @@ function openLayers3() {
 //here i define the variable mymap so i don't get any problem with the variable scope even if i think i will give it as an argument for the callbackfunction on getjson, maybe later :)
 var mymap;
 // the leaflet function that define the mapitself (woah)
-var leaflet = function() {
+function leaflet() {
     //define were we start to see the map on the load
     mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
@@ -86,68 +148,19 @@ var leaflet = function() {
     cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");
     cercle.on('click', onMapClick);
 
-
-    function onMapClick() {
-        console.log(" SALUTTTTTTT");
-    }
-
     var circles = [];
-
-
-
     // let's start the most funny function :) enjoy!
     getjson(createCircle, circles);
+    function linkcircles(circles) {
+    console.log("hey");
+
+    circles.on('click', onMapClick);
+    }
+}
+function onMapClick() {
+  console.log(" SALUTTTTTTT");
 }
 
-
-let createCircle = function(data, circles) {
-    console.log("heeey", data, mymap);
-    if (data) {
-        console.log(data);
-        for (let i = 0; i < data.histoire.length; i++) {
-            console.log(data.histoire[i]);
-        }
-        console.log("inside circle");
-    } else {
-        console.log("rien de défini");
-        return false;
-    }
-
-    console.log("my map: ", mymap);
-    console.log("après get json");
-    console.log("data dans create", data);
-
-    let lat, long, nbmessage, country, city;
-    console.log("create circle started");
-    for (let i = 0; i < data.histoire.length; i++) {
-        //define the lat long and nbmessage from the json (data)
-        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage, country = data.histoire[i].pays, city = data.histoire[i].ville;
-        console.log(i);
-        circles.push({
-            //give to the circle the coordinates
-            circle: L.circle([lat, long], {
-                //random color generation by using math random
-                color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
-                    (Math.random() * 255).toFixed(0) + ', ' +
-                    (Math.random() * 255).toFixed(0) + ', 1.0)',
-                fillColor: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
-                    (Math.random() * 255).toFixed(0) + ', ' +
-                    (Math.random() * 255).toFixed(0) + ', 1.0)',
-                //set the opacity of the circle
-                fillOpacity: 0.8,
-                //set the radius
-                radius: nbmessage * 50
-            }).addTo(mymap)
-        })
-        console.log("circles: ", circles);
-        console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
-    }
-    let lul = circles[0];
-    console.log("circles: ", circles);
-    console.log("circles: ", circles[0]);
-
-    return lul.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");;
-}
 
 //get the JSON response from the server
 function getjson(callback, circles) {
