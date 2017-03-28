@@ -57,7 +57,7 @@ function openLayers3() {
 //here i define the variable mymap so i don't get any problem with the variable scope even if i think i will give it as an argument for the callbackfunction on getjson, maybe later :)
 var mymap;
 // the leaflet function that define the mapitself (woah)
-let leaflet = function() {
+var leaflet = function() {
     //define were we start to see the map on the load
     mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
@@ -75,11 +75,32 @@ let leaflet = function() {
         id: 'mapbox.satellite',
         accessToken: 'your.mapbox.public.access.token'
     }).addTo(mymap);
+
+    var cercle = L.circle([51.508, -0.11], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 500
+    }).addTo(mymap);
+
+    cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");
+    cercle.on('click', onMapClick);
+
+
+    function onMapClick() {
+        console.log(" SALUTTTTTTT");
+    }
+
+    var circles = [];
+
+
+
     // let's start the most funny function :) enjoy!
-    getjson(createCircle);
+    getjson(createCircle, circles);
 }
 
-let createCircle = function(data) {
+
+let createCircle = function(data, circles) {
     console.log("heeey", data, mymap);
     if (data) {
         console.log(data);
@@ -95,17 +116,16 @@ let createCircle = function(data) {
     console.log("my map: ", mymap);
     console.log("après get json");
     console.log("data dans create", data);
-    let circles = [];
-    let lat, long, nbmessage;
+
+    let lat, long, nbmessage, country, city;
     console.log("create circle started");
     for (let i = 0; i < data.histoire.length; i++) {
         //define the lat long and nbmessage from the json (data)
-        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage;
+        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage, country = data.histoire[i].pays, city = data.histoire[i].ville;
         console.log(i);
         circles.push({
             //give to the circle the coordinates
-            i: bindPopup("I am a circle."),
-            i: L.circle([lat, long], {
+            circle: L.circle([lat, long], {
                 //random color generation by using math random
                 color: 'rgba(' + (Math.random() * 255).toFixed(0) + ', ' +
                     (Math.random() * 255).toFixed(0) + ', ' +
@@ -119,13 +139,18 @@ let createCircle = function(data) {
                 radius: nbmessage * 50
             }).addTo(mymap)
         })
+        console.log("circles: ", circles);
         console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
     }
+    let lul = circles[0];
     console.log("circles: ", circles);
+    console.log("circles: ", circles[0]);
 
+    return lul.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");;
 }
+
 //get the JSON response from the server
-function getjson(callback) {
+function getjson(callback, circles) {
     //create a new variable that will contain all the request
     var request = new XMLHttpRequest();
     console.log("hey");
@@ -144,7 +169,7 @@ function getjson(callback) {
     // console log as i like to do (this one show the request and how it looks like)
     console.log("request", request);
 
-    // progression des transferts depuis le serveur jusqu'au client (téléchargement)
+    // download progress (like a progress bar yep yep ^^) gives you information about the download status
     function updateProgress(oEvent) {
         if (oEvent.lengthComputable) {
             var percentComplete = oEvent.loaded / oEvent.total;
@@ -180,7 +205,7 @@ function getjson(callback) {
                 console.log("nbmessage: ", data.histoire[0].nombredemessage);
                 console.log("createCircle before: ", createCircle);
                 console.log("callback: ", callback);
-                return callback(data);
+                return callback(data, circles);
             } else {
                 console.error(request.statusText);
             }
