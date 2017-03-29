@@ -8,13 +8,41 @@ let createCircle;
 });
 
 function linkcircles(circles) {
-console.log("hey");
 
-cercle.on('click', onMapClick);
+}
+class linking {
+  constructor(on) {
+
+  }
+
+
+
+
+  cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");
+  cercle.on('click', onMapClick);
+}
+class Rectangle {
+  constructor(hauteur, largeur) {
+    this.hauteur = hauteur;
+    this.largeur = largeur;
+  }
+
+  get area() {
+    console.log("this: ", this);
+    return this.calcArea();
+  }
+
+  calcArea() {
+    return this.largeur * this.hauteur;
+  }
 }
 
+const carré = new Rectangle(10, 10);
 
-createCircle = function(data, circles) {
+console.log("carré: ", carré.area);
+
+
+let createCircle = function(data, circles) {
     console.log("heeey", data, mymap);
     if (data) {
         console.log(data);
@@ -56,16 +84,11 @@ createCircle = function(data, circles) {
         console.log("circles: ", circles);
         console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
     }
-    let lul = circles[0];
     console.log("circles: ", circles);
-    console.log("circles: ", circles[0]);
+    console.log("circles index 0: ", circles[0]);
 
     return linkcircles(circles);
 }
-
-
-
-
 
 
 
@@ -148,7 +171,8 @@ function leaflet() {
     cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");
     cercle.on('click', onMapClick);
 
-    var circles = [];
+    let circles = [];
+
     // let's start the most funny function :) enjoy!
     getjson(createCircle, circles);
     function linkcircles(circles) {
