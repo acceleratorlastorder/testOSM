@@ -151,8 +151,8 @@ let leaflet = function() {
     }
 }
 
-function onMapClick(city) {
-    console.log("this: ", this, "city:", city);
+function onMapClick() {
+    console.log("this: ", this, "city:", this.options.city);
 
 }
 
