@@ -1,50 +1,11 @@
 document.addEventListener("DOMContentLoaded", function(event) {
     console.log("DOM loaded launching functions");
     start();
-let createCircle;
-    for (var i = 0; i < 8; i++) {
+    let createCircle;
+    for (let i = 0; i < 8; i++) {
         document.getElementsByTagName('h4')[i].addEventListener("click", lol, false);
     }
 });
-
-function linkcircles(circles) {
-
-}
-class linking {
-  constructor(on, lel) {
-
-  }
-
-
-}
-/*********************************************************** TEST ***********************************************************/
-class Rectangle {
-  constructor(hauteur, largeur) {
-    this.hauteur = hauteur;
-    this.largeur = largeur;
-  }
-  get perimeter(){
-    return this.calcperimeter();
-  }
-  get area() {
-    console.log("this: ", this);
-    return this.calcArea();
-  }
-
-  calcArea() {
-    return this.largeur * this.hauteur;
-  }
-  calcperimeter(){
-    return (this.largeur + this.hauteur) * 2;
-  }
-}
-
-const carré = new Rectangle(10, 10);
-
-console.log("carré: ", carré.area);
-console.log("carré globalement: ", carré);
-console.log("carré périmètre: ", carré.perimeter);
-/***********************************  TEST ***********************************************/
 
 let createCircle = function(data, circles) {
     console.log("heeey", data, mymap);
@@ -82,8 +43,10 @@ let createCircle = function(data, circles) {
                 //set the opacity of the circle
                 fillOpacity: 0.8,
                 //set the radius
-                radius: nbmessage * 50
-            }).addTo(mymap)
+                radius: nbmessage * 50,
+                country: country,
+                city: city
+            }).addTo(mymap).on('click', onMapClick)
         })
         console.log("circles: ", circles);
         console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
@@ -91,7 +54,8 @@ let createCircle = function(data, circles) {
     console.log("circles: ", circles);
     console.log("circles index 0: ", circles[0]);
 
-    return linkcircles(circles);
+    return false;
+
 }
 
 
@@ -118,8 +82,8 @@ function redraw() {
 function start() {
 
     console.log(" salut ! ");
-    openLayers2();
-    openLayers3();
+    //  openLayers2();
+    //  openLayers3();
     leaflet();
 }
 // do i need to explain this one ? yes well this is an experimental function for later maybe if i feel good enough and i have time to spend on making an openlayer V2 based script
@@ -146,7 +110,7 @@ function openLayers3() {
 //here i define the variable mymap so i don't get any problem with the variable scope even if i think i will give it as an argument for the callbackfunction on getjson, maybe later :)
 var mymap;
 // the leaflet function that define the mapitself (woah)
-function leaflet() {
+let leaflet = function() {
     //define were we start to see the map on the load
     mymap = L.map('mapid').setView([37.996, 15.908], 5);
     console.log("leaflet started");
@@ -179,14 +143,17 @@ function leaflet() {
 
     // let's start the most funny function :) enjoy!
     getjson(createCircle, circles);
-    function linkcircles(circles) {
-    console.log("hey");
 
-    circles.on('click', onMapClick);
+    function linkcircles(circles) {
+        console.log("hey");
+
+        circles.on('click', onMapClick);
     }
 }
-function onMapClick() {
-  console.log(" SALUTTTTTTT");
+
+function onMapClick(city) {
+    console.log("this: ", this, "city:", city);
+
 }
 
 
