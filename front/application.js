@@ -24,11 +24,11 @@ let createCircle = function(data, circles) {
     console.log("après get json");
     console.log("data dans create", data);
 
-    let lat, long, nbmessage, country, city;
+    let lat, long, nbmessage, country, city, fewmessages;
     console.log("create circle started");
     for (let i = 0; i < data.histoire.length; i++) {
         //define the lat long and nbmessage from the json (data)
-        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage, country = data.histoire[i].pays, city = data.histoire[i].ville;
+        lat = data.histoire[i].coordonees[0], long = data.histoire[i].coordonees[1], nbmessage = data.histoire[i].nombredemessage, country = data.histoire[i].pays, city = data.histoire[i].ville, fewmessages = [];
         console.log(i);
         circles.push({
             //give to the circle the coordinates
@@ -45,10 +45,15 @@ let createCircle = function(data, circles) {
                 //set the radius
                 radius: nbmessage * 50,
                 country: country,
-                city: city
-            }).addTo(mymap).on('click', onMapClick)
+                city: city,
+                fewmessages: fewmessages
+            }).addTo(mymap).on('click', onMapClick).on("mouseover", function(e) {
+  console.log("e: ");
+  hovershowmessages(e);
+})
         })
         console.log("circles: ", circles);
+        console.log("circle index", i, ": ", circles[i]);
         console.log("latitude: ", lat, "longitude: ", long, "nbmessage: ", nbmessage);
     }
     console.log("circles: ", circles);
@@ -57,8 +62,18 @@ let createCircle = function(data, circles) {
     return false;
 
 }
+function hovershowmessages(e){
+  console.log("few messages: ", e);
+  e.target.bindPopup("loool");
+}
+
+function onMapClick() {
+  console.log("this: ", this, "city:", this.options.city);
 
 
+// REDIRECTION REMOVE THE COMMENT TO ACTIVATE  document.location.href="http://www." + this.options.city + '.com';
+
+}
 
 // useless function that make the clicked element bigger :)
 function lol() {
@@ -138,7 +153,7 @@ let leaflet = function() {
 
     cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");
     cercle.on('click', onMapClick);
-
+    cercle.on("mouseover", useless)
     let circles = [];
 
     // let's start the most funny function :) enjoy!
@@ -149,12 +164,15 @@ let leaflet = function() {
 
         circles.on('click', onMapClick);
     }
+
+    function useless() {
+        console.log("bon t'es passé sur moi :)");
+        cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH je suis un hover element");
+        console.log("this: ", this);
+    }
+
 }
 
-function onMapClick() {
-    console.log("this: ", this, "city:", this.options.city);
-
-}
 
 
 //get the JSON response from the server
