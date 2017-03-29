@@ -17,6 +17,7 @@ class linking {
 
 
 }
+/*********************************************************** TEST ***********************************************************/
 class Rectangle {
   constructor(hauteur, largeur) {
     this.hauteur = hauteur;
@@ -43,7 +44,7 @@ const carré = new Rectangle(10, 10);
 console.log("carré: ", carré.area);
 console.log("carré globalement: ", carré);
 console.log("carré périmètre: ", carré.perimeter);
-
+/***********************************  TEST ***********************************************/
 
 let createCircle = function(data, circles) {
     console.log("heeey", data, mymap);
