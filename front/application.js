@@ -11,22 +11,20 @@ function linkcircles(circles) {
 
 }
 class linking {
-  constructor(on) {
+  constructor(on, lel) {
 
   }
 
 
-
-
-  cercle.bindPopup("YOOOOOOOO, ALORS BIEN OU BIEN AHHHHHHHHHHHHHHHHHH");
-  cercle.on('click', onMapClick);
 }
 class Rectangle {
   constructor(hauteur, largeur) {
     this.hauteur = hauteur;
     this.largeur = largeur;
   }
-
+  get perimeter(){
+    return this.calcperimeter();
+  }
   get area() {
     console.log("this: ", this);
     return this.calcArea();
@@ -35,11 +33,16 @@ class Rectangle {
   calcArea() {
     return this.largeur * this.hauteur;
   }
+  calcperimeter(){
+    return (this.largeur + this.hauteur) * 2;
+  }
 }
 
 const carré = new Rectangle(10, 10);
 
 console.log("carré: ", carré.area);
+console.log("carré globalement: ", carré);
+console.log("carré périmètre: ", carré.perimeter);
 
 
 let createCircle = function(data, circles) {
